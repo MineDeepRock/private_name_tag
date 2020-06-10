@@ -7,6 +7,10 @@ use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
 use pocketmine\level\Level;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\Player;
 use pocketmine\utils\UUID;
 
 class NameTagEntity extends Human
@@ -15,32 +19,50 @@ class NameTagEntity extends Human
 
     protected $capeData = "";
 
-    public $eyeHeight = 1.5;
+    public $eyeHeight = 2;
 
     protected $gravity = 0.08;
     protected $drag = 0.02;
 
     public $scale = 1.0;
 
-    public $defaultHP = 1;
+    public $defaultHP = 20;
     public $uuid;
 
 
     const NAME = "NameTag";
-    public $width = 0.6;
-    public $height = 0.2;
+    public $width = 0;
+    public $height = 1.8;
 
     public $geometryId = "geometry." . self::NAME;
     public $geometryName = self::NAME . ".geo.json";
 
-    public function __construct(Level $level, CompoundTag $nbt) {
+    private $ownerName;
+
+    public function __construct(Player $owner) {
         $this->uuid = UUID::fromRandom();
         $this->initSkin();
-
-        parent::__construct($level, $nbt);
+        $nbt = new CompoundTag('', [
+            'Pos' => new ListTag('Pos', [
+                new DoubleTag('', $owner->getX()),
+                new DoubleTag('', 1.8),
+                new DoubleTag('', $owner->getZ())
+            ]),
+            'Motion' => new ListTag('Motion', [
+                new DoubleTag('', 0),
+                new DoubleTag('', 0),
+                new DoubleTag('', 0)
+            ]),
+            'Rotation' => new ListTag('Rotation', [
+                new FloatTag("", $owner->getYaw()),
+                new FloatTag("", 0)
+            ]),
+        ]);
+        parent::__construct($owner->getLevel(), $nbt);
         $this->setRotation($this->yaw, $this->pitch);
         $this->setNameTagAlwaysVisible(true);
         $this->sendSkin();
+        $this->ownerName = $owner->getName();
     }
 
     public function initEntity(): void {
@@ -53,10 +75,17 @@ class NameTagEntity extends Human
     private function initSkin(): void {
         $this->setSkin(new Skin(
             $this->skinId,
-            file_get_contents("./plugin_data/team_name_tag_system/" . self::NAME . ".skin"),
+            file_get_contents("./plugin_data/TeamNameTagSystem/" . self::NAME . ".skin"),
             $this->capeData,
             $this->geometryId,
-            file_get_contents("./plugin_data/team_name_tag_system/" . $this->geometryName)
+            file_get_contents("./plugin_data/TeamNameTagSystem/" . $this->geometryName)
         ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerName(): string {
+        return $this->ownerName;
     }
 }

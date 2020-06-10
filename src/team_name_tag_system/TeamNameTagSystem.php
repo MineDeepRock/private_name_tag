@@ -12,6 +12,7 @@ use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 use team_name_tag_system\pmmp\entities\NameTagEntity;
 
 class TeamNameTagSystem
@@ -23,23 +24,7 @@ class TeamNameTagSystem
     }
 
     static function set(Player $player, string $nameTag, array $targets): void {
-        $nbt = new CompoundTag('', [
-            'Pos' => new ListTag('Pos', [
-                new DoubleTag('', $player->getX()),
-                new DoubleTag('', 1.8),
-                new DoubleTag('', $player->getZ())
-            ]),
-            'Motion' => new ListTag('Motion', [
-                new DoubleTag('', 0),
-                new DoubleTag('', 0),
-                new DoubleTag('', 0)
-            ]),
-            'Rotation' => new ListTag('Rotation', [
-                new FloatTag("", $player->getYaw()),
-                new FloatTag("", 0)
-            ]),
-        ]);
-        $nameTagEntity = new NameTagEntity($player->getLevel(), $nbt);
+        $nameTagEntity = new NameTagEntity($player);
         foreach ($targets as $target) {
             $nameTagEntity->spawnTo($target);
         }
@@ -53,5 +38,16 @@ class TeamNameTagSystem
         self::$server->broadcastPacket(self::$server->getOnlinePlayers(), $setEntity);
 
         $nameTagEntity->setDataFlag(Entity::DATA_FLAG_RIDING, true);
+    }
+
+    static public function updateNameTag(Player $player, string $nameTag): void {
+        $nameTagEntity = null;
+        foreach ($player->getLevel()->getEntities() as $entity) {
+            if ($entity instanceof NameTagEntity) {
+                if ($entity->getOwnerName() === $player->getName()) {
+                    $entity->setNameTag($nameTag);
+                }
+            }
+        }
     }
 }
