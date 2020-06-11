@@ -5,6 +5,8 @@ namespace team_name_tag_system;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerDeathEvent;
+use pocketmine\event\player\PlayerRespawnEvent;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
@@ -22,5 +24,12 @@ class Main extends PluginBase implements Listener
     public function onReceiveDamaged(EntityDamageByEntityEvent $event) {
         $victim = $event->getEntity();
         if ($victim instanceof NameTagEntity) $event->setCancelled();
+    }
+
+    public function onDead(PlayerDeathEvent $event) {
+        $player = $event->getEntity();
+        if ($player instanceof Player) {
+            TeamNameTagSystem::deleteNameTag($player);
+        }
     }
 }

@@ -41,11 +41,20 @@ class TeamNameTagSystem
     }
 
     static public function updateNameTag(Player $player, string $nameTag): void {
-        $nameTagEntity = null;
         foreach ($player->getLevel()->getEntities() as $entity) {
             if ($entity instanceof NameTagEntity) {
                 if ($entity->getOwnerName() === $player->getName()) {
                     $entity->setNameTag($nameTag);
+                }
+            }
+        }
+    }
+
+    static public function deleteNameTag(Player $player): void {
+        foreach ($player->getLevel()->getEntities() as $entity) {
+            if ($entity instanceof NameTagEntity) {
+                if ($entity->getOwnerName() === $player->getName()) {
+                    $entity->kill();
                 }
             }
         }
