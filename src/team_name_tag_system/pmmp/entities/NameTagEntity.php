@@ -21,8 +21,8 @@ class NameTagEntity extends Human
 
     public $eyeHeight = 2;
 
-    protected $gravity = 0.08;
-    protected $drag = 0.02;
+    protected $gravity = 0;
+    protected $drag = 0;
 
     public $scale = 1.0;
 
@@ -45,7 +45,7 @@ class NameTagEntity extends Human
         $nbt = new CompoundTag('', [
             'Pos' => new ListTag('Pos', [
                 new DoubleTag('', $owner->getX()),
-                new DoubleTag('', 1.8),
+                new DoubleTag('', $this->eyeHeight),
                 new DoubleTag('', $owner->getZ())
             ]),
             'Motion' => new ListTag('Motion', [
