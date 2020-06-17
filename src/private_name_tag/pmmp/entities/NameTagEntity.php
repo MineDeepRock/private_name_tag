@@ -1,11 +1,10 @@
 <?php
 
-namespace team_name_tag_system\pmmp\entities;
+namespace private_name_tag\pmmp\entities;
 
 
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
-use pocketmine\level\Level;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;

@@ -1,4 +1,4 @@
-name: TeamNameTagSystem
-main: team_name_tag_system\Main
+name: PrivateNameTag
+main: private_name_tag\Main
 version: 1.0.0
 api: 3.0.0
