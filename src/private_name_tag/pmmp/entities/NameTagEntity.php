@@ -87,4 +87,9 @@ class NameTagEntity extends Human
     public function getOwnerName(): string {
         return $this->ownerName;
     }
+
+    public function kill(): void {
+        $this->setHealth(0);
+        $this->scheduleUpdate();
+    }
 }

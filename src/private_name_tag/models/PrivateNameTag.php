@@ -75,6 +75,7 @@ class PrivateNameTag
         foreach ($this->owner->getLevel()->getEntities() as $entity) {
             if ($entity instanceof NameTagEntity) {
                 if ($entity->getOwnerName() === $this->owner->getName()) {
+                    $entity->setInvisible(true);
                     $entity->kill();
                 }
             }
