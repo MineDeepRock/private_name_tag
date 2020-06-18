@@ -16,18 +16,13 @@ class NameTagEntity extends Human
 {
     protected $skinId = "Standard_CustomSlim";
 
-    protected $capeData = "";
-
     public $eyeHeight = 2;
-
     protected $gravity = 0;
     protected $drag = 0;
-
     public $scale = 1.0;
 
     public $defaultHP = 20;
     public $uuid;
-
 
     const NAME = "NameTag";
     public $width = 0;
@@ -74,10 +69,10 @@ class NameTagEntity extends Human
     private function initSkin(): void {
         $this->setSkin(new Skin(
             $this->skinId,
-            file_get_contents("./plugin_data/TeamNameTagSystem/" . self::NAME . ".skin"),
-            $this->capeData,
+            file_get_contents("./plugin_data/PrivateNameTag/" . self::NAME . ".skin"),
+            "",
             $this->geometryId,
-            file_get_contents("./plugin_data/TeamNameTagSystem/" . $this->geometryName)
+            file_get_contents("./plugin_data/PrivateNameTag/" . $this->geometryName)
         ));
     }
 
