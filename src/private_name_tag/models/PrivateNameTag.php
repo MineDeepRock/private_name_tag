@@ -41,7 +41,7 @@ class PrivateNameTag
 
 
         $setEntity = new SetActorLinkPacket();
-        $setEntity->link = new EntityLink($this->owner->getId(), $nameTagEntity->getId(), EntityLink::TYPE_RIDER);
+        $setEntity->link = new EntityLink($this->owner->getId(), $nameTagEntity->getId(), EntityLink::TYPE_RIDER, true, true);
 
         $this->owner->setGenericFlag(Entity::DATA_FLAG_RIDING, true);
         Server::getInstance()->broadcastPacket($this->viewers, $setEntity);
@@ -83,7 +83,7 @@ class PrivateNameTag
         PrivateNameTagStore::remove($this->getOwner()->getName());
     }
 
-    static function get(Player $owner) :?PrivateNameTag {
+    static function get(Player $owner): ?PrivateNameTag {
         return PrivateNameTagStore::get($owner);
     }
 
