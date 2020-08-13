@@ -12,7 +12,6 @@ class PrivateNameTagStore
 
     /**
      * @var PrivateNameTag[]
-     * ownerName => nameTag
      */
     static private $privateNameTags = [];
 
@@ -21,23 +20,25 @@ class PrivateNameTagStore
     }
 
     static function get(Player $player): ?PrivateNameTag {
-        foreach (self::$privateNameTags as $name => $privateNameTag) {
-            if ($name === $player->getName()) return $privateNameTag;
+        foreach (self::$privateNameTags as $privateNameTag) {
+            if ($privateNameTag->getOwner()->getName() === $player->getName()) return $privateNameTag;
         }
 
         return null;
     }
 
     static function add(PrivateNameTag $privateNameTag): void {
-        self::$privateNameTags[$privateNameTag->getOwner()->getName()] = $privateNameTag;
+        self::$privateNameTags[] = $privateNameTag;
     }
 
     static function remove(string $ownerName): void {
-        foreach (self::$privateNameTags as $name => $privateNameTag) {
-            if ($name === $ownerName) {
-                unset(self::$privateNameTags[$name]);
+        foreach (self::$privateNameTags as $index => $privateNameTag) {
+            if ($privateNameTag->getOwner()->getName() === $ownerName) {
+                unset(self::$privateNameTags[$index]);
             }
         }
+
+        self::$privateNameTags = array_values(self::$privateNameTags);
     }
 
     static function update(PrivateNameTag $privateNameTag): void {
