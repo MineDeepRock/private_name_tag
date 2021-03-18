@@ -1,6 +1,6 @@
 <?php
 
-namespace private_name_tag\pmmp\entities;
+namespace private_name_tag;
 
 
 use pocketmine\entity\Human;

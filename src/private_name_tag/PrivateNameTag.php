@@ -12,7 +12,6 @@ use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
 use pocketmine\Server;
-use private_name_tag\pmmp\entities\NameTagEntity;
 
 class PrivateNameTag
 {
