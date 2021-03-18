@@ -8,7 +8,6 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\plugin\PluginBase;
-use private_name_tag\pmmp\entities\NameTagEntity;
 
 class Main extends PluginBase implements Listener
 {

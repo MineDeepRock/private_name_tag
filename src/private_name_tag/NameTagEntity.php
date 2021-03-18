@@ -6,13 +6,7 @@ namespace private_name_tag;
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
 use pocketmine\level\Level;
-use pocketmine\nbt\tag\CompoundTag;
-use pocketmine\nbt\tag\DoubleTag;
-use pocketmine\nbt\tag\FloatTag;
-use pocketmine\nbt\tag\ListTag;
-use pocketmine\Player;
 use pocketmine\utils\UUID;
-use private_name_tag\Main;
 
 class NameTagEntity extends Human
 {
