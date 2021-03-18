@@ -8,6 +8,7 @@ use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\DoubleTag;
 use pocketmine\nbt\tag\FloatTag;
 use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
@@ -50,6 +51,7 @@ class PrivateNameTag
                 new FloatTag("", 0),
                 new FloatTag("", 0)
             ]),
+            'OwnerName' => new StringTag('OwnerName', $this->getOwner()->getName())
         ]);
 
         $nameTagEntity = new NameTagEntity($this->owner->getLevel(), $nbt);

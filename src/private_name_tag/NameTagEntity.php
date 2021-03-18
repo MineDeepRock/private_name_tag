@@ -6,6 +6,7 @@ namespace private_name_tag;
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
 use pocketmine\level\Level;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\utils\UUID;
 
 class NameTagEntity extends Human
@@ -22,16 +23,17 @@ class NameTagEntity extends Human
 
     const NAME = "NameTag";
     public $width = 0;
-    public $height = 0;
+    public $height = 1.8;
 
     public $geometryId = "geometry." . self::NAME;
     public $geometryName = self::NAME . ".geo.json";
 
     private $ownerName;
 
-    public function __construct(Level $level,$nbt) {
+    public function __construct(Level $level, CompoundTag $nbt) {
         $this->uuid = UUID::fromRandom();
         $this->initSkin();
+        $this->ownerName = $nbt->getString('OwnerName');
 
         parent::__construct($level, $nbt);
         $this->setNameTagAlwaysVisible(true);
