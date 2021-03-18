@@ -1,15 +1,18 @@
 <?php
 
-namespace private_name_tag\models;
+namespace private_name_tag;
 
 
 use pocketmine\entity\Entity;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
+use pocketmine\nbt\tag\ListTag;
 use pocketmine\network\mcpe\protocol\SetActorLinkPacket;
 use pocketmine\network\mcpe\protocol\types\EntityLink;
 use pocketmine\Player;
 use pocketmine\Server;
 use private_name_tag\pmmp\entities\NameTagEntity;
-use private_name_tag\store\PrivateNameTagStore;
 
 class PrivateNameTag
 {
@@ -33,8 +36,27 @@ class PrivateNameTag
     }
 
     public function set(): void {
-        $nameTagEntity = new NameTagEntity($this->owner);
+        $nbt = new CompoundTag('', [
+            'Pos' => new ListTag('Pos', [
+                new DoubleTag('', $this->owner->getX()),
+                new DoubleTag('', $this->owner->eyeHeight),
+                new DoubleTag('', $this->owner->getZ())
+            ]),
+            'Motion' => new ListTag('Motion', [
+                new DoubleTag('', 0),
+                new DoubleTag('', 0),
+                new DoubleTag('', 0)
+            ]),
+            'Rotation' => new ListTag('Rotation', [
+                new FloatTag("", 0),
+                new FloatTag("", 0)
+            ]),
+        ]);
+
+        $nameTagEntity = new NameTagEntity($this->owner->getLevel(), $nbt);
         $nameTagEntity->setNameTag($this->text);
+
+
         foreach ($this->viewers as $viewer) {
             $nameTagEntity->spawnTo($viewer);
         }

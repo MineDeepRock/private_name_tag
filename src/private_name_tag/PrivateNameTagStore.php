@@ -1,11 +1,10 @@
 <?php
 
 
-namespace private_name_tag\store;
+namespace private_name_tag;
 
 
 use pocketmine\Player;
-use private_name_tag\models\PrivateNameTag;
 
 class PrivateNameTagStore
 {
